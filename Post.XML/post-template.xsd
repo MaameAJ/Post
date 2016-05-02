@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<!--targetNamespace=""
+xmlns=""
+elementFormDefault="qualified"-->
+	<!-- definition of simple elements -->
+	<xs:element name="format" type="xs:string" />
+
+	<!-- definition of attributes -->
+	<xs:attribute name="title" type="xs:Name" />
+	<xs:attribute name="name" type="xs:Name" />
+	<xs:attribute name="type">
+		<xs:simpleType>
+			<xs:restriction base="xs:token">
+				<xs:enumeration value="SINGLE"/>
+				<xs:enumeration value="AREA" />
+				<xs:enumeration value="AUTO" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:attribute>
+
+	<!-- definition of complex elements -->
+	<xs:element name="field">
+		<xs:complexType>
+				<xs:attribute ref="name" use="required"/>
+				<xs:attribute ref="type" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="fieldlist">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="field" maxOccurs="unbounded" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="post">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="format" />
+				<xs:element ref="fieldlist" />
+			</xs:all>
+			<xs:attribute ref="title" />
+		</xs:complexType>
+	</xs:element>
+
+  <xs:element name="templates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="post" minOccurs="1" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
